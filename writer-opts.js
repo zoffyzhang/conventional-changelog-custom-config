@@ -14,7 +14,25 @@ try {
   console.error('no root package.json found')
 }
 
+const pickCommitTypeDefault = {
+  feat: true,
+  fix: true,
+  perf: true,
+  revert: true,
+  docs: true,
+  style: true,
+  refactor: true,
+  test: true,
+  build: true,
+  ci: true,
+  chore: true
+}
+
 const { changelog } = pkgJson
+const pickCommitType =
+  changelog.pickCommitType && Object.keys(changelog.pickCommitType).length > 0
+    ? changelog.pickCommitType
+    : pickCommitTypeDefault
 let bugsUrl = changelog ? changelog.bugsUrl || false : false
 if (typeof bugsUrl !== 'string') bugsUrl = false
 let emojis = changelog ? changelog.emojis || false : false
@@ -61,53 +79,53 @@ function getWriterOpts() {
       })
 
       if (emojis) {
-        if (commit.type === `feat`) {
+        if (commit.type === `feat` && pickCommitType.feat) {
           commit.type = `✨ Features`
-        } else if (commit.type === `fix`) {
+        } else if (commit.type === `fix` && pickCommitType.fix) {
           commit.type = `🐛 Bug Fixes`
-        } else if (commit.type === `perf`) {
+        } else if (commit.type === `perf` && pickCommitType.perf) {
           commit.type = `⚡ Performance Improvements`
-        } else if (commit.type === `revert`) {
+        } else if (commit.type === `revert` && pickCommitType.revert) {
           commit.type = `⏪ Reverts`
-        } else if (commit.type === `docs`) {
+        } else if (commit.type === `docs` && pickCommitType.docs) {
           commit.type = `📝 Documentation`
-        } else if (commit.type === `style`) {
+        } else if (commit.type === `style` && pickCommitType.style) {
           commit.type = `💄 Styles`
-        } else if (commit.type === `refactor`) {
+        } else if (commit.type === `refactor` && pickCommitType.refactor) {
           commit.type = `♻ Code Refactoring`
-        } else if (commit.type === `test`) {
+        } else if (commit.type === `test` && pickCommitType.test) {
           commit.type = `✅ Tests`
-        } else if (commit.type === `build`) {
+        } else if (commit.type === `build` && pickCommitType.build) {
           commit.type = `👷‍ Build System`
-        } else if (commit.type === `ci`) {
+        } else if (commit.type === `ci` && pickCommitType.ci) {
           commit.type = `🔧 Continuous Integration`
-        } else if (commit.type === 'chore') {
+        } else if (commit.type === 'chore' && pickCommitType.chore) {
           commit.type = '🎫 Chores'
         } else if (discard) {
           return
         }
       } else {
-        if (commit.type === `feat`) {
+        if (commit.type === `feat` && pickCommitType.feat) {
           commit.type = `Features`
-        } else if (commit.type === `fix`) {
+        } else if (commit.type === `fix` && pickCommitType.fix) {
           commit.type = `Bug Fixes`
-        } else if (commit.type === `perf`) {
+        } else if (commit.type === `perf` && pickCommitType.perf) {
           commit.type = `Performance Improvements`
-        } else if (commit.type === `revert`) {
+        } else if (commit.type === `revert` && pickCommitType.revert) {
           commit.type = `Reverts`
-        } else if (commit.type === `docs`) {
+        } else if (commit.type === `docs` && pickCommitType.docs) {
           commit.type = `Documentation`
-        } else if (commit.type === `style`) {
+        } else if (commit.type === `style` && pickCommitType.style) {
           commit.type = `Styles`
-        } else if (commit.type === `refactor`) {
+        } else if (commit.type === `refactor` && pickCommitType.refactor) {
           commit.type = `Code Refactoring`
-        } else if (commit.type === `test`) {
+        } else if (commit.type === `test` && pickCommitType.test) {
           commit.type = `Tests`
-        } else if (commit.type === `build`) {
+        } else if (commit.type === `build` && pickCommitType.build) {
           commit.type = `Build System`
-        } else if (commit.type === `ci`) {
+        } else if (commit.type === `ci` && pickCommitType.ci) {
           commit.type = `Continuous Integration`
-        } else if (commit.type === 'chore') {
+        } else if (commit.type === 'chore' && pickCommitType.chore) {
           commit.type = 'Chores'
         } else if (discard) {
           return
